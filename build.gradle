@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id "io.freefair.lombok" version "8.2.2"
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+def
+        junitVersion = "5.9.3",
+        retrofitVersion = "2.9.0"
+
+dependencies {
+
+    testImplementation(
+            "org.junit.jupiter:junit-jupiter:$junitVersion",
+            "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            "com.squareup.retrofit2:converter-jackson:$retrofitVersion",
+            'com.fasterxml.jackson.core:jackson-databind:2.15.2',
+            'com.fasterxml.jackson.core:jackson-core:2.15.2',
+            'org.assertj:assertj-core:3.24.2'
+    )
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
+}
